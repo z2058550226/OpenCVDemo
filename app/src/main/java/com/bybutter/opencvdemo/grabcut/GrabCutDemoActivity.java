@@ -39,8 +39,9 @@ import org.opencv.imgproc.Imgproc;
 public class GrabCutDemoActivity extends AppCompatActivity {
     static final int REQUEST_OPEN_IMAGE = 1;
 
-    String mCurrentPhotoPath;
-    Bitmap mBitmap;
+    private String mCurrentPhotoPath;
+    private Bitmap mBitmap;
+    private Uri mImgUri;
     ImageView mImageView;
 
     int touchCount = 0;
@@ -54,7 +55,7 @@ public class GrabCutDemoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grabcut);
 
-        mImageView = (ImageView) findViewById(R.id.imgDisplay);
+        mImageView = findViewById(R.id.imgDisplay);
         dlg = new ProgressDialog(this);
         tl = new Point();
         br = new Point();
@@ -86,8 +87,13 @@ public class GrabCutDemoActivity extends AppCompatActivity {
         bmOptions.inSampleSize = scaleFactor;
         bmOptions.inPurgeable = true;
 
-        mBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        mImageView.setImageBitmap(mBitmap);
+        try {
+            mBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(mImgUri), null, bmOptions);
+            mImageView.setImageBitmap(mBitmap);
+        } catch (Exception e) {
+
+        }
+
     }
 
     @Override
@@ -96,16 +102,17 @@ public class GrabCutDemoActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_OPEN_IMAGE:
                 if (resultCode == RESULT_OK) {
-                    Uri imgUri = data.getData();
+                    mImgUri = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-                    Cursor cursor = getContentResolver().query(imgUri, filePathColumn,
+                    Cursor cursor = getContentResolver().query(mImgUri, filePathColumn,
                             null, null, null);
                     cursor.moveToFirst();
 
                     int colIndex = cursor.getColumnIndex(filePathColumn[0]);
                     mCurrentPhotoPath = cursor.getString(colIndex);
                     cursor.close();
+
                     setPic();
                 }
                 break;
@@ -117,6 +124,9 @@ public class GrabCutDemoActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
+            case R.id.action_child_image:
+
+                break;
             case R.id.action_open_img:
                 Intent getPictureIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 getPictureIntent.setType("image/*");

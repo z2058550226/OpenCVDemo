@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -14,24 +15,33 @@ import androidx.appcompat.app.AppCompatActivity
 class PermissionActivity : AppCompatActivity() {
     companion object {
         private const val CAMERA_PERMISSION_REQUEST_CODE = 200
+
+        private val permissionArr =
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var havePermission = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(
-                    arrayOf(Manifest.permission.CAMERA),
-                    CAMERA_PERMISSION_REQUEST_CODE
-                )
+            if (hasPermissionsNotGranted(*permissionArr)) {
+                requestPermissions(permissionArr, CAMERA_PERMISSION_REQUEST_CODE)
                 havePermission = false
             }
         }
         if (havePermission) {
             startMainActivity()
         }
-        Toast.makeText(this,"s",Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "s", Toast.LENGTH_SHORT).show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun hasPermissionsNotGranted(vararg permissions: String): Boolean {
+        return permissions.any { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
     }
 
     private fun startMainActivity() {

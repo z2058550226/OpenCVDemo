@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TestArtifact</string>
+    <string name="app_name">OpenCvDemo</string>
 
     <string name="menu_open">Open Image</string>
     <string name="menu_select">Select target</string>
