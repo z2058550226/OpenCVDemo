@@ -26,7 +26,6 @@ import org.opencv.core.Rect
 import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import timber.log.Timber
-import java.io.File
 
 /**
  * Created by suikajy on 2020.3.6
@@ -60,9 +59,7 @@ class GrabCutActivity : CoroutineActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_child_image -> {
-                true
-            }
+            R.id.action_child_image -> true
             R.id.action_open_img -> {
                 val getPicIntent = Intent(Intent.ACTION_GET_CONTENT)
                 getPicIntent.type = "image/*"
@@ -171,11 +168,11 @@ class GrabCutActivity : CoroutineActivity() {
                     fgModel.release()
                     vals.release()
 
-                    Imgcodecs.imwrite(outputImgDir.absolutePath + TEMP_IMAGE_FILE_NAME, dst)
+                    Imgcodecs.imwrite(getOutputImageFilePath(TEMP_IMAGE_FILE_NAME), dst)
 
                     withContext(Dispatchers.Main) {
                         val outputImg = BitmapFactory.decodeFile(
-                            File(outputImgDir, TEMP_IMAGE_FILE_NAME).absolutePath
+                            getOutputImageFilePath(TEMP_IMAGE_FILE_NAME)
                         )
 
                         imgDisplay.scaleType = ImageView.ScaleType.CENTER_INSIDE

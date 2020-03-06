@@ -36,3 +36,5 @@ fun Bitmap.saveAsTempFile(fileName: String) {
 fun getTempImageFile(fileName: String) = File(tempImgDir, fileName)
 
 fun getTempImagePath(fileName: String) = File(tempImgDir, fileName).absolutePath
+
+fun getOutputImageFilePath(fileName: String) = File(outputImgDir,fileName).absolutePath
