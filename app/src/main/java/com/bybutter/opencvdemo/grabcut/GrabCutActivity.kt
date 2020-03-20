@@ -148,9 +148,8 @@ class GrabCutActivity : CoroutineActivity() {
                     val color = Scalar(255.0, 0.0, 0.0, 255.0)
                     Imgproc.rectangle(img, p1, p2, color)
 
-                    val tmp = Mat()
-                    Imgproc.resize(background, tmp, img.size())
-                    background = tmp
+                    Imgproc.resize(background, background, img.size())
+
                     val mask = Mat(foreground.size(), CvType.CV_8UC1, WhiteScalar)
                     Imgproc.cvtColor(foreground, mask, Imgproc.COLOR_BGR2GRAY)
                     Imgproc.threshold(mask, mask, 254.0, 255.0, Imgproc.THRESH_BINARY_INV)
@@ -185,6 +184,93 @@ class GrabCutActivity : CoroutineActivity() {
                     }
 
                     targetChose = false
+                }
+                true
+            }
+            R.id.action_test -> {
+                launch {
+                    if (!getTempImageFile(TEMP_IMAGE_FILE_NAME).exists()) return@launch
+                    val tempImagePath = getTempImagePath(TEMP_IMAGE_FILE_NAME)
+
+                    Timber.e("tempImagePath: $tempImagePath")
+                    val originalImage: Mat = Imgcodecs.imread(tempImagePath)
+                    val rowCount = originalImage.rows()
+                    val colCount = originalImage.cols()
+                    val mask = Mat(
+                        originalImage.rows(),
+                        originalImage.cols(),
+                        CvType.CV_8UC1,
+                        Scalar(0.0)
+                    )
+                    val bgModel = Mat()
+                    val fgModel = Mat()
+
+                    val roiMask = Mat(mask, Rect(200, 0, 350, 750))
+                    roiMask.setTo(Scalar(Imgproc.GC_PR_FGD.toDouble()))
+                    Timber.e("roiMask.size().toString(): ${roiMask.size().toString()}")
+                    Timber.e("mask: ${mask}")
+
+                    val newMask = Mat(rowCount, colCount, CvType.CV_8UC1, Scalar(1.0))
+                    newMask.submat(Range(75, 80), Range(457, 463)).setTo(Scalar(255.0))
+                    newMask.submat(Range(90, 110), Range(610, 630)).setTo(Scalar(.0))
+
+                    for (row in 0..originalImage.rows()) {
+                        for (col in 0..originalImage.cols()) {
+                            val gray = newMask[row, col] ?: continue
+                            when (gray[0]) {
+                                .0 -> mask.put(row, col, byteArrayOf(0))
+                                255.0 -> mask.put(row, col, byteArrayOf(1))
+                            }
+                        }
+                    }
+                    val startTime = Core.getTickCount()
+                    Imgproc.grabCut(
+                        originalImage,
+                        mask,
+                        Rect(),
+                        bgModel,
+                        fgModel,
+                        5,
+                        Imgproc.GC_INIT_WITH_MASK
+                    )
+                    val spendTime = Core.getTickCount() - startTime
+                    Timber.e("spendTime: ${spendTime / Core.getTickFrequency() * 1000}")
+
+                    val prBgd = Mat()
+                    Core.compare(
+                        mask,
+                        Scalar(Imgproc.GC_PR_BGD.toDouble()),
+                        prBgd,
+                        Core.CMP_EQ
+                    )
+                    Core.subtract(mask, prBgd, mask)
+                    val foreground = Mat(mask.size(), CvType.CV_8UC4, Scalar(.0, .0, .0, .0))
+
+                    originalImage.copyTo(foreground, mask)
+                    Imgcodecs.imwrite(getOutputImageFilePath(TEMP_IMAGE_FILE_NAME), foreground)
+
+                    foreground.release()
+                    roiMask.release()
+                    bgModel.release()
+                    fgModel.release()
+                    mask.release()
+                    originalImage.release()
+                    newMask.release()
+                    prBgd.release()
+
+                    withContext(Dispatchers.Main) {
+                        val outputImg = BitmapFactory.decodeFile(
+                            getOutputImageFilePath(TEMP_IMAGE_FILE_NAME)
+                        )
+
+                        imgDisplay.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                        imgDisplay.adjustViewBounds = true
+                        imgDisplay.setPadding(2, 2, 2, 2)
+                        imgDisplay.setImageBitmap(outputImg)
+                        imgDisplay.invalidate()
+
+                        Toast.makeText(application, "cut over", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 true
             }

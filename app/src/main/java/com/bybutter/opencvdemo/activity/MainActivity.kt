@@ -6,7 +6,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bybutter.opencvdemo.R
 import com.bybutter.opencvdemo.grabcut.GrabCutActivity
-import com.bybutter.opencvdemo.grabcut.GrabCutDemoActivity
 
 /**
  * Created by suikajy on 2020.3.1
@@ -23,10 +22,6 @@ class MainActivity : AppCompatActivity() {
 
     fun tutorial(view: View) {
         startActivity(Intent(this, TutorialActivity::class.java))
-    }
-
-    fun grabCut(view: View) {
-        startActivity(Intent(this, GrabCutDemoActivity::class.java))
     }
 
     fun myGrabCut(view: View) {
