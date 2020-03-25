@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_open_img"
+        android:orderInCategory="100"
+        android:title="@string/menu_open"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_reset_path"
+        android:orderInCategory="200"
+        android:title="reset path"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_mark_fgd"
+        android:orderInCategory="300"
+        android:title="mark foreground"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_mark_bgd"
+        android:orderInCategory="400"
+        android:title="mark background"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_mark_roi"
+        android:orderInCategory="500"
+        android:title="mark region of interest"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_grab_cut"
+        android:orderInCategory="600"
+        android:title="grab cut"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_test"
+        android:orderInCategory="700"
+        android:title="some test"
+        app:showAsAction="never" />
+</menu>

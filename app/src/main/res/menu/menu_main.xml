@@ -22,8 +22,4 @@
         android:orderInCategory="400"
         android:title="test"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_child_image"
-        android:title="こどもの写真"
-        app:showAsAction="never" />
 </menu>

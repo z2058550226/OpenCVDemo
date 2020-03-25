@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.bybutter.opencvdemo.MainActivity
 
 /**
  * Created by suikajy on 2020.2.28

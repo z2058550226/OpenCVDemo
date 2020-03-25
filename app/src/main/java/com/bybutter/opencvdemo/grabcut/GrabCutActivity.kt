@@ -33,8 +33,8 @@ import timber.log.Timber
 
 class GrabCutActivity : CoroutineActivity() {
     companion object {
-        const val REQ_OPEN_IMAGE = 0x11
-        const val TEMP_IMAGE_FILE_NAME = "grabCutTmp.png"
+        private const val REQ_OPEN_IMAGE = 0x11
+        private const val TEMP_IMAGE_FILE_NAME = "grabCutTmp.png"
     }
 
     private val p1 = Point()
@@ -59,7 +59,6 @@ class GrabCutActivity : CoroutineActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_child_image -> true
             R.id.action_open_img -> {
                 val getPicIntent = Intent(Intent.ACTION_GET_CONTENT)
                 getPicIntent.type = "image/*"

@@ -28,7 +28,7 @@ val outputImgDir: File
 
 fun Bitmap.saveAsTempFile(fileName: String) {
     FileOutputStream(File(tempImgDir, fileName)).use {
-        this.compress(Bitmap.CompressFormat.PNG, 100, it)
+        compress(Bitmap.CompressFormat.PNG, 100, it)
         it.flush()
     }
 }

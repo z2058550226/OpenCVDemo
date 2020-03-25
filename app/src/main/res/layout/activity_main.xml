@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +26,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="myGrabCut"
-            android:text="my grab cut" />
+            android:text="grab cut" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="grabCutView"
+            android:text="grab cut view" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="canvasTest"
+            android:text="canvas test" />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
