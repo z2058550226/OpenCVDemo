@@ -27,6 +27,8 @@
         <activity android:name=".grabcut.GrabCutActivity" />
         <activity android:name=".grabcut.GrabCutViewActivity" />
         <activity android:name=".grabcut.CanvasTestActivity" />
+        <activity android:name=".activity.DrawViewActivity" />
+        <activity android:name=".activity.EraserViewActivity" />
     </application>
 
 </manifest>

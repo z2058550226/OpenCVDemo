@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".grabcut.GrabCutViewActivity">
 
-    <com.bybutter.opencvdemo.widget.GrabCutView
+    <com.bybutter.opencvdemo.widget.FastGrabCutView
         android:id="@+id/gv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

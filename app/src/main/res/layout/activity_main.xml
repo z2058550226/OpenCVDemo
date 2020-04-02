@@ -39,6 +39,17 @@
             android:layout_height="wrap_content"
             android:onClick="canvasTest"
             android:text="canvas test" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="drawView"
+            android:text="draw view" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="eraserView"
+            android:text="eraser view"/>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

@@ -5,10 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.bybutter.opencvdemo.activity.DrawViewActivity
+import com.bybutter.opencvdemo.activity.EraserViewActivity
 import com.bybutter.opencvdemo.activity.TutorialActivity
 import com.bybutter.opencvdemo.grabcut.CanvasTestActivity
 import com.bybutter.opencvdemo.grabcut.GrabCutActivity
 import com.bybutter.opencvdemo.grabcut.GrabCutViewActivity
+import com.bybutter.opencvdemo.util.CppBridge
+import timber.log.Timber
 import kotlin.reflect.KClass
 
 /**
@@ -27,4 +31,6 @@ class MainActivity : AppCompatActivity() {
     fun myGrabCut(view: View) = navigate(GrabCutActivity::class)
     fun grabCutView(view: View) = navigate(GrabCutViewActivity::class)
     fun canvasTest(view: View) = navigate(CanvasTestActivity::class)
+    fun drawView(view: View) = navigate(DrawViewActivity::class)
+    fun eraserView(view: View) = navigate(EraserViewActivity::class)
 }

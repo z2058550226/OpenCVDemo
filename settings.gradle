@@ -1,2 +1,5 @@
 rootProject.name='OpenCVDemo'
 include ':app'
+def opencvsdk = rootProject.projectDir.path + '/opencv'
+include ':opencv'
+project(':opencv').projectDir = new File(opencvsdk + '/sdk')
